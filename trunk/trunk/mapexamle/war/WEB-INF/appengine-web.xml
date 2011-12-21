@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-  <application>http:\\mapexampl.appspot.com\</application>
-  <version>0.0</version>
+  <application>fitripnn</application>
+  <version>1</version>
+  <sessions-enabled>true</sessions-enabled>
 
   <!--
     By default, App Engine sends requests serially to a given web server.
@@ -14,5 +15,6 @@
   <system-properties>
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
   </system-properties>
+  
  
 </appengine-web-app>
