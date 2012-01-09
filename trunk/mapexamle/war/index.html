@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <title>Google Maps</title>
-    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;
-    key=ABQIAAAAis5qHnC0R0HJ_BVrZGzkIhSFkR_D_gOwX2IIiF5GO7ZB5cNfQRTAJuJ1wCNvTTaq9JHaWJ1pBgoddw" 
-    type="text/javascript"></script>
+    <meta charset="utf-8" />
+    <title>FitRip NN</title>
+    <script src="//maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAis5qHnC0R0HJ_BVrZGzkIhTWbRzG_Gt0NZuVnFbiTM0HpeOudxTf9sFmiStiZ5Ilr7rbI2t6FtYuYA"
+            type="text/javascript"></script>
     <script type="text/javascript">
-
-    var map = null;
+    
+    var map=null;
     var geocoder = null;
     var address;
-
+    
+    
     function initialize() {
-    alert(window.location.host)
-      map = new GMap2(document.getElementById("map_canvas"));
-      map.setCenter(new GLatLng(56.30,44.00), 12);
-      map.setUIToDefault();
-      GEvent.addListener(map, "click", AjaxCheck);
-      geocoder = new GClientGeocoder();
+      if (GBrowserIsCompatible()) {
+        map = new GMap2(document.getElementById("map_canvas"));
+        map.setCenter(new GLatLng(56,10, 46,00), 12);
+        map.panTo(new GLatLng(56.30, 44.00))
+        map.setUIToDefault();
+        GEvent.addListener(map, "click", AjaxCheck);
+        geocoder = new GClientGeocoder();
+      }
     }
     
-    
-     
-
     function AjaxCheck() 
     {
     
@@ -39,44 +38,19 @@
     xhr.open('GET', 'mapexamle', true);
     xhr.send(null);
     }
-
-   
     
+    function animate() {    
+      map.panTo(new GLatLng(56.30, 44.00));
+    }
     
-    function getAddress(overlay, latlng) {
-      if (latlng != null) {
-        address = latlng;
-        geocoder.getLocations(latlng, showAddress);
-      }
-    }
-
-    function showAddress(response) {
-      map.clearOverlays();
-      if (!response || response.Status.code != 200) {
-        alert("Status Code:" + response.Status.code);
-      } else {
-        place = response.Placemark[0];
-        point = new GLatLng(place.Point.coordinates[1],
-                            place.Point.coordinates[0]);
-        marker = new GMarker(point);
-        map.addOverlay(marker);
-        marker.openInfoWindowHtml(
-        '<b>orig latlng:</b>' + response.name + '<br/>' + 
-        '<b>latlng:</b>' + place.Point.coordinates[1] + "," + place.Point.coordinates[0] + '<br>' +
-        '<b>Status Code:</b>' + response.Status.code + '<br>' +
-        '<b>Status Request:</b>' + response.Status.request + '<br>' +
-        '<b>Address:</b>' + place.address + '<br>' +
-        '<b>Accuracy:</b>' + place.AddressDetails.Accuracy + '<br>' +
-        '<b>Country code:</b> ' + place.AddressDetails.Country.CountryNameCode);
-      }
-    }
-
-
     </script>
   </head>
-
-  <body onload="initialize()">
-    <div id="map_canvas" style="width: 600px; height: 600px"></div>
+  <body onload="initialize()" onunload="GUnload()">
+    <div id="map_canvas" style="width: 500px; height: 500px"></div>
+   <form action="#" onsubmit="animate(); return false">
+     <p>
+       <input type="submit" value="Move!" />
+     </p>
+   </form>
   </body>
 </html>
-
