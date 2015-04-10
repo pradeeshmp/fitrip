@@ -1,0 +1,1 @@
+The Web service to track the load of public places (cafes mostly).
